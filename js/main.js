@@ -1,5 +1,5 @@
 function table() {
-    let sortDitrection = false;
+    let sortDitrection = 'ascending';
 
     let person= [
         {id: 1, name: 'Вася', date: '15.06.2018', count: 11},
@@ -11,10 +11,11 @@ function table() {
         {id: 7, name: 'Анастасия', date: '20.11.2018', count: 34},
         {id: 8, name: 'Степан', date: '12.11.2019', count: 10},
     ];
-    const personData = JSON.parse(JSON.stringify(person));
+
+    let personData = JSON.parse(JSON.stringify(person));
     
     let columns = document.querySelectorAll('th');
-    
+
     columns.forEach(column => {
         column.addEventListener('click', () => {
             columns.forEach(column => {
@@ -31,13 +32,13 @@ function table() {
     /* создаёт таблицу */
     function creationTable(personData) {;
         const tableBody = document.getElementById('tableBody');
-        let tableContent = '';
+        let table = '';
     
         personData.forEach(td => {
-            tableContent += `<tr><td data-column="id">${td.id}</td><td data-column="name">${td.name}</td><td data-column="date">${td.date}</td><td data-column="count">${td.count}</td></tr>`;
+            table += `<tr><td data-column="id">${td.id}</td><td data-column="name">${td.name}</td><td data-column="date">${td.date}</td><td data-column="count">${td.count}</td></tr>`;
         });
     
-        tableBody.innerHTML = tableContent;
+        tableBody.innerHTML = table;
     }
 
     /* Поиск по столбцу */
@@ -58,11 +59,9 @@ function table() {
     
     /* запуск сортировки */
     function sortColumn(columnName) {
-        sortDitrection = !sortDitrection;
-    
         if (columnName === 'id' || columnName === 'count') {
             sortNumberColumn(sortDitrection, columnName);
-        } ;
+        };
         if (columnName === 'name') {
             sortNameColumn(sortDitrection, columnName);
         };
@@ -76,27 +75,50 @@ function table() {
     /* сортировка для id или счёт */
     function sortNumberColumn(sort, columnName) {
         personData.sort((a, b) => {
-            return sort ? a[columnName] - b[columnName] : b[columnName] - a[columnName];
+            if (sort === 'ascending') {
+                sortDitrection = 'descending';
+                return a[columnName] - b[columnName]
+            }
+            if (sort === 'descending') {
+                sortDitrection = 'noSort';
+                return b[columnName] - a[columnName]
+            }
+            if (sort === 'noSort') {
+                sortDitrection = 'ascending';
+                noSort()
+            }
         });
+        
     }; 
     
     /* сортировка для имя */
     function sortNameColumn(sort, columnName) {
         personData.sort((a, b) => {
-            if(sort) {
-                if(a[columnName] > b[columnName]) {
+            sortDitrection = 'descending';
+
+            if (sort === 'ascending') {
+                if (a[columnName] > b[columnName]) {
                     return 1;
-                } 
-                if(a[columnName] < b[columnName]) {
-                    return -1;
-                } 
-            } else {
-                if(a[columnName] < b[columnName]) {
-                    return 1;
-                } 
-                if(a[columnName] > b[columnName]) {
+                };
+                if (a[columnName] < b[columnName]) {
                     return -1;
                 };
+            };
+
+            if (sort === 'descending') {
+                sortDitrection = 'noSort';
+
+                if (a[columnName] < b[columnName]) {
+                    return 1;
+                }; 
+                if (a[columnName] > b[columnName]) {
+                    return -1;
+                };
+            };
+
+            if (sort === 'noSort') {
+                sortDitrection = 'ascending';
+                noSort()
             };
         });
     };
@@ -109,23 +131,39 @@ function table() {
             let dateB = b[columnName].replace(/марта/g, '03').split(/[\.\/\ ]+/).reverse();
             dateB += new Date(dateB);
 
-            if(sort) {
-                if(dateA > dateB) {
-                    return 1;
-                }
-                if(dateA < dateB) {
-                    return -1;
-                };
-            } else {
-                if(dateA < dateB) {
+            if (sort === 'ascending') {
+                sortDitrection = 'descending';
+
+                if (dateA > dateB) {
                     return 1;
                 };
-                if(dateA > dateB) {
+                if (dateA < dateB) {
                     return -1;
                 };
-            };
+            }
+
+            if (sort === 'descending') {
+                sortDitrection = 'noSort';
+
+                if (dateA < dateB) {
+                    return 1;
+                };
+                if (dateA > dateB) {
+                    return -1;
+                };
+            }
+
+            if (sort === 'noSort') {
+                sortDitrection = 'ascending';
+                noSort()
+            }
         });
     };
+
+    /* Без сортировки */
+    function noSort() {
+        personData = JSON.parse(JSON.stringify(person));
+    }
     
     creationTable(personData);
 };
