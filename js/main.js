@@ -32,13 +32,13 @@ function table() {
     /* создаёт таблицу */
     function creationTable(personData) {;
         const tableBody = document.getElementById('tableBody');
-        let table = '';
+        let tr = '';
     
         personData.forEach(td => {
-            table += `<tr><td data-column="id">${td.id}</td><td data-column="name">${td.name}</td><td data-column="date">${td.date}</td><td data-column="count">${td.count}</td></tr>`;
+            tr += `<tr><td data-column="id">${td.id}</td><td data-column="name">${td.name}</td><td data-column="date">${td.date}</td><td data-column="count">${td.count}</td></tr>`;
         });
     
-        tableBody.innerHTML = table;
+        tableBody.innerHTML = tr;
     }
 
     /* Поиск по столбцу */
