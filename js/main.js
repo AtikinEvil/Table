@@ -20,7 +20,7 @@ function table() {
         column.addEventListener('click', () => {
             columns.forEach(column => {
                 column.classList.remove('active');
-            });
+            })
 
             column.classList.add('active');
         
@@ -36,7 +36,7 @@ function table() {
     
         personData.forEach(td => {
             tr += `<tr><td data-column="id">${td.id}</td><td data-column="name">${td.name}</td><td data-column="date">${td.date}</td><td data-column="count">${td.count}</td></tr>`;
-        });
+        })
     
         tableBody.innerHTML = tr;
     }
@@ -52,25 +52,25 @@ function table() {
             filterElement.forEach(item => {
                 if(item.dataset.column === columnName) {
                     item.innerHTML.toLowerCase().indexOf(filter) > -1 ? item.closest('tr').style.display = '' : item.closest('tr').style.display = 'none';
-                };
-            });
-        });
-    };
+                }
+            })
+        })
+    }
     
     /* запуск сортировки */
     function sortColumn(columnName) {
         if (columnName === 'id' || columnName === 'count') {
             sortNumberColumn(sortDitrection, columnName);
-        };
+        }
         if (columnName === 'name') {
             sortNameColumn(sortDitrection, columnName);
-        };
+        }
         if (columnName === 'date') {
             sortDataColumn(sortDitrection, columnName);
-        };
+        }
         
         creationTable(personData);
-    };
+    }
     
     /* сортировка для id или счёт */
     function sortNumberColumn(sort, columnName) {
@@ -86,9 +86,9 @@ function table() {
             if (sort === 'noSort') {
                 sortDitrection = 'ascending';
                 noSort()
-            };
-        });
-    }; 
+            }
+        })
+    } 
     
     /* сортировка для имя */
     function sortNameColumn(sort, columnName) {
@@ -98,29 +98,29 @@ function table() {
             if (sort === 'ascending') {
                 if (a[columnName] > b[columnName]) {
                     return 1;
-                };
+                }
                 if (a[columnName] < b[columnName]) {
                     return -1;
-                };
-            };
+                }
+            }
 
             if (sort === 'descending') {
                 sortDitrection = 'noSort';
 
                 if (a[columnName] < b[columnName]) {
                     return 1;
-                }; 
+                }
                 if (a[columnName] > b[columnName]) {
                     return -1;
-                };
-            };
+                }
+            }
 
             if (sort === 'noSort') {
                 sortDitrection = 'ascending';
                 noSort()
-            };
-        });
-    };
+            }
+        })
+    }
     
     /* сортировка для даты */
     function sortDataColumn(sort, columnName) {
@@ -135,10 +135,10 @@ function table() {
 
                 if (dateA > dateB) {
                     return 1;
-                };
+                }
                 if (dateA < dateB) {
                     return -1;
-                };
+                }
             }
 
             if (sort === 'descending') {
@@ -146,18 +146,18 @@ function table() {
 
                 if (dateA < dateB) {
                     return 1;
-                };
+                }
                 if (dateA > dateB) {
                     return -1;
-                };
+                }
             }
 
             if (sort === 'noSort') {
                 sortDitrection = 'ascending';
                 noSort()
             }
-        });
-    };
+        })
+    }
 
     /* Без сортировки */
     function noSort() {
@@ -165,6 +165,6 @@ function table() {
     }
     
     creationTable(personData);
-};
+}
 
 table()
