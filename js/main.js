@@ -52,7 +52,7 @@ function table() {
             filterElement.forEach(item => {
                 if(item.dataset.column === columnName) {
                     item.innerHTML.toLowerCase().indexOf(filter) > -1 ? item.closest('tr').style.display = '' : item.closest('tr').style.display = 'none';
-                }
+                };
             });
         });
     };
@@ -78,17 +78,16 @@ function table() {
             if (sort === 'ascending') {
                 sortDitrection = 'descending';
                 return a[columnName] - b[columnName]
-            }
+            };
             if (sort === 'descending') {
                 sortDitrection = 'noSort';
                 return b[columnName] - a[columnName]
-            }
+            };
             if (sort === 'noSort') {
                 sortDitrection = 'ascending';
                 noSort()
-            }
+            };
         });
-        
     }; 
     
     /* сортировка для имя */
